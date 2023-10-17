@@ -76,4 +76,43 @@
 //     console.log(isi)
 //     p.innerHTML = isi
 // })
+const inputBox = document.getElementById("inbox-box");
+const listContainer = document.getElementById("list-container");
 
+function addTask() {
+    if (inputBox.value === '') {
+        alert("Masukan list terlebih dahulu");
+    } else {
+        let li = document.createElement("li");
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "checkbox";
+        li.appendChild(checkbox);
+        let taskText = document.createTextNode(inputBox.value);
+        li.appendChild(taskText);
+        
+        let removeButton = document.createElement("button");
+        removeButton.textContent = "X";
+        removeButton.className = "remove-button";
+        removeButton.style.marginLeft = "10px"
+        li.appendChild(removeButton);
+        listContainer.appendChild(li);
+        
+        inputBox.value = "";
+        li.style.listStyleType = "none";
+        
+        removeButton.addEventListener("click", function () {
+            li.remove();
+        });
+    }
+}
+
+listContainer.addEventListener("change", function (e) {
+    if (e.target.tagName === "INPUT" && e.target.type === "checkbox") {
+        if (e.target.checked) {
+            e.target.parentElement.style.textDecoration = "line-through";
+        } else {
+            e.target.parentElement.style.textDecoration = "none";
+        }
+    }
+});
